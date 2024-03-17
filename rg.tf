@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "rg1" {
   location = var.location
 
   tags = {
-    env = var.env
+    env   = var.env
     batch = var.batch
   }
 }
