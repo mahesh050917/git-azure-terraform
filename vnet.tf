@@ -24,23 +24,11 @@ resource "azurerm_virtual_network" "demo_vnet2" {
 }
 
 
-resource "azurerm_subnet" "demo_subnet1" {
-  name                 = "${azurerm_virtual_network.demo_vnet1.name}-subnet1"
+resource "azurerm_subnet" "demo_subnet" {
+  count                = 3
+  name                 = "${azurerm_virtual_network.demo_vnet1.name}-subnet${count.index}"
   resource_group_name  = azurerm_resource_group.rg1.name
   virtual_network_name = azurerm_virtual_network.demo_vnet1.name
-  address_prefixes     = [var.subnet1_cidr]
+  address_prefixes     = [element(var.subnet_cidr, count.index)]
 }
 
-resource "azurerm_subnet" "demo_subnet2" {
-  name                 = "${azurerm_virtual_network.demo_vnet1.name}-subnet2"
-  resource_group_name  = azurerm_resource_group.rg1.name
-  virtual_network_name = azurerm_virtual_network.demo_vnet1.name
-  address_prefixes     = [var.subnet2_cidr]
-}
-
-resource "azurerm_subnet" "demo_subnet3" {
-  name                 = "${azurerm_virtual_network.demo_vnet1.name}-subnet3"
-  resource_group_name  = azurerm_resource_group.rg1.name
-  virtual_network_name = azurerm_virtual_network.demo_vnet1.name
-  address_prefixes     = [var.subnet3_cidr]
-}
