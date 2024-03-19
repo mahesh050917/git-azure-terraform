@@ -25,7 +25,8 @@ resource "azurerm_key_vault_access_policy" "demopolicy" {
     "Purge",
     "Recover",
     "Restore",
-    "Set"
+    "Set",
+    "Delete"
   ]
 }
 
@@ -44,4 +45,24 @@ resource "azurerm_key_vault_access_policy" "demouserpolicy" {
     "Restore",
     "Set"
   ]
+}
+
+
+resource "azurerm_private_endpoint" "demo_endpoint" {
+  name                = "demokeyvault-pe"
+  resource_group_name = azurerm_resource_group.rg1.name
+  location            = azurerm_resource_group.rg1.location
+  subnet_id           = azurerm_subnet.private_subnet.id
+  private_dns_zone_group {
+    name = "default"
+    #private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zones["privatelink-vaultcore-azure-net"].id]
+    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zones.id]
+  }
+  private_service_connection {
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_key_vault.demokeyvault.id
+    name                           = "${azurerm_key_vault.demokeyvault.name}-psc"
+    subresource_names              = ["vault"]
+  }
+  depends_on = [azurerm_key_vault.demokeyvault]
 }

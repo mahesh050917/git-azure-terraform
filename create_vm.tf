@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "demo_vm_publcip" {
-  count               = 3
+  count               = 0
   name                = "vm-publicip-${count.index}"
   resource_group_name = azurerm_resource_group.rg1.name
   location            = azurerm_resource_group.rg1.location
@@ -13,7 +13,7 @@ resource "azurerm_public_ip" "demo_vm_publcip" {
 
 
 resource "azurerm_network_interface" "demo_vm_nic" {
-  count               = 3
+  count               = 0
   name                = "vm-nic-${count.index}"
   location            = azurerm_resource_group.rg1.location
   resource_group_name = azurerm_resource_group.rg1.name
@@ -27,7 +27,7 @@ resource "azurerm_network_interface" "demo_vm_nic" {
 }
 
 resource "azurerm_linux_virtual_machine" "demo_vms" {
-  count               = 3
+  count               = 0
   name                = "linuxvm-${count.index}"
   resource_group_name = azurerm_resource_group.rg1.name
   location            = azurerm_resource_group.rg1.location

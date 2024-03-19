@@ -8,3 +8,4 @@ variable "vnet2_cidr" {}
 variable "subnet_cidr" {}
 variable "sku_size" {}
 variable "vm_username" {}
+variable "privatesubnet_cidr" {}
